@@ -7,20 +7,10 @@ from skimage.feature import hog
 from skimage.transform import pyramid_gaussian
 from skimage.io import imread
 import joblib
-from sklearn.preprocessing import LabelEncoder
-from sklearn.svm import LinearSVC
-from sklearn.metrics import classification_report
-from sklearn.model_selection import train_test_split
 from skimage import color
-from imutils.object_detection import non_max_suppression
-import imutils
-import argparse
-import glob
 from PIL import Image
 import time
-from numpy import *
 import pickle
-from matplotlib import pyplot as plt
 
 
 config = 'predictor.sav'
@@ -104,32 +94,8 @@ def preProcessLocation(imPath):
     #     edge_detected_image = cv2.Canny(bilateral_filtered_image, 10, 100) # For bright images
 
     
-    # corners = cv2.goodFeaturesToTrack(edge_detected_image, 500, .0001, 7, useHarrisDetector=True) 
-
-
-    blockSz = 3;
-    apertureSz = 3;
-    k = 0.04;
-    qualityLevel = 50; 
-
-    ev_Harris  = cv2.cornerEigenValsAndVecs(edge_detected_image, blockSz, apertureSz);
-    Mc_Harris = prod(ev_Harris(0,0,1,2), 3) - k * sum(ev_Harris(0,0,1,2), 3)^2;
-
-    mnH = min(Mc_Harris(0));
-    mxH = max(Mc_Harris(0));
-
-    mask_Harris = Mc_Harris > (mnH + (mxH - mnH)*qualityLevel/100);
-
-    sz = size(Mc_Harris);
-    [X,Y] = meshgrid(1,sz(2), 1,sz(1));
-
-    pts_Harris = [X(mask_Harris), Y(mask_Harris)];
-
-    print([X,Y])
-
-    corners = np.int0(ev_Harris) 
-    print(corners)
-
+    corners = cv2.goodFeaturesToTrack(edge_detected_image, 500, .0001, 7, useHarrisDetector=True) 
+    corners = np.int0(corners) 
     cornerList = []
   
     for i in corners: 
@@ -141,7 +107,6 @@ def preProcessLocation(imPath):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    dividedImage = edge_detected_image.copy()
 
 
 #     shutil.rmtree('./Temp Images')
@@ -213,9 +178,9 @@ def preProcessLocation(imPath):
                     a = corner[0]
                     b = corner[1]
                     within = (x < a < x+w) and (y < b < y+h)
-                    if within: 
-                        cv2.circle(dividedImage, (a, b), 5, (0,0,0), -1) 
-                        cv2.circle(dividedImage, (a, b), 5, (0,0,0), 1) 
+                    # if within: 
+                        # cv2.circle(brightImage, (a, b), 5, (255,0,0), 1) 
+                        
 
 
 
@@ -225,9 +190,9 @@ def preProcessLocation(imPath):
             	suppPath = '../suppTrain/negs'
             	cv2.imwrite(os.path.join(suppPath, fileName), cropped)
 
-    cv2.imshow("Divided", dividedImage)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow("Rects", rawImage)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
          
            
 
@@ -321,9 +286,9 @@ os.mkdir("./imageStore")
 # imagePath = "./images/chainformation3.png" 
 # imagePath = "./images/chainformation2.png"
 # imagePath = "./images/chainformation1.png" 
-# imagePath = "./Images/islandtest3.tif"   
+imagePath = "./Images/islandtest3.tif"   
 # imagePath = "./Images/islandtest1.tif"  
 # imagePath = "./Images/islandtest2.tif"
-imagePath = "./Images/macro_image_09233.tiff"
+# imagePath = "./Images/macro_image_09233.tiff"
 
 preProcessLocation(imagePath)

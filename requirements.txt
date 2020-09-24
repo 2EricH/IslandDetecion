@@ -1,0 +1,7 @@
+imutils==0.5.3
+joblib==0.13.2
+numpy
+Pillow==6.0.0
+scikit-image
+scikit-learn
+
