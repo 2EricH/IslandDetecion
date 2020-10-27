@@ -280,13 +280,13 @@ shutil.rmtree('./imageStore')
 time.sleep(.0001)
 os.mkdir("./imageStore")
 
-# imagePath = "./images/compare9.tif"
+imagePath = "./images/compare5.tif"
 # imagePath = "./images/keithTest1.tif" 
 # imagePath = "./images/chainformation4.png" 
 # imagePath = "./images/chainformation3.png" 
 # imagePath = "./images/chainformation2.png"
 # imagePath = "./images/chainformation1.png" 
-imagePath = "./Images/islandtest3.tif"   
+# imagePath = "./Images/islandtest3.tif"   
 # imagePath = "./Images/islandtest1.tif"  
 # imagePath = "./Images/islandtest2.tif"
 # imagePath = "./Images/macro_image_09233.tiff"
