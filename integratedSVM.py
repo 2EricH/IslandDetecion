@@ -114,7 +114,7 @@ def preProcessLocation(imPath):
     #----------------------------------------
     # Finding Contours
    
-    _, contours, _ = cv2.findContours(edge_detected_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)# print(contours)
+    contours, _ = cv2.findContours(edge_detected_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)# print(contours)
     
 
     contour_list = []
